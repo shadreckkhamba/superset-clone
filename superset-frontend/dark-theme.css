@@ -1,0 +1,269 @@
+/* DARK MODE STYLES */
+
+body.dark-theme{
+  background-color: #030302;
+  color: #ffffff;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+/* Optional: apply transition even when switching back */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+/* Force dark mode for all main containers */
+.dark-theme body,
+.dark-theme .dashboard,
+.dark-theme .dashboard--editing,
+.dark-theme .grid-container,
+.dark-theme .ant-tabs-content-holder,
+.dark-theme .ant-tabs-content,
+.dark-theme .ant-tabs-tabpane-active {
+  background-color: #000000 !important;
+}
+
+/* Main chart wrapper */
+.dark-theme .dashboard-component-chart-holder {
+  background-color: #1a1a1a !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.07), 0 0 15px rgba(0, 0, 0, 0.8) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  z-index: 1 !important;
+  margin-bottom: 12px !important;
+  padding: 8px !important;
+}
+
+.dark-theme .dashboard-component-chart-holder .chart-slice,
+.dark-theme .dashboard-component-chart-holder .chart-container,
+.dark-theme .resizable-container,
+.dark-theme .css-1ahd2mf-StyledChartContainer,
+.dark-theme .dashboard-component,
+.dark-theme .dashboard-component-chart-holder {
+  background-color: transparent !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+.dark-theme .dashboard-component-chart-holder,
+.dark-theme .dashboard-component .dashboard-component-chart-holder {
+  box-shadow: 0 2px 8px rgba(120, 120, 120, 0.50) !important;
+  border-radius: 12px !important;
+  background: rgb(15, 15, 15) !important;
+}
+
+/* Remove any white margin/padding around main container */
+.dark-theme .grid-content,
+.dark-theme .dashboard-grid {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Target all pie chart containers */
+.dark-theme [data-test-viz-type="pie"] {
+  background-color: #1a1a1a !important;
+  border-radius: 4px !important;
+  color: #e0e0e0 !important;
+}
+
+.dark-theme [data-test-viz-type="pie"] .chart-slice,
+.dark-theme [data-test-viz-type="pie"] .slice_container,
+.dark-theme [data-test-viz-type="pie"] .resizable-container {
+  background-color: transparent !important;
+  color: #e0e0e0 !important;
+}
+
+.dark-theme [data-test-viz-type="pie"] .chart-slice > div[style*="background: rgb(227, 251, 255)"] {
+  background-color: #2b2b2b !important;
+  color: #e0e0e0 !important;
+  box-shadow: none !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  font-weight: 500;
+}
+
+.dark-theme [data-test-viz-type="pie"] .chart-slice > div[style*="background: rgb(227, 251, 255)"] span {
+  color: #e0e0e0 !important;
+}
+
+/* Remove transparent background overrides */
+.dark-theme .grid-row.background--transparent {
+  background-color: #000000 !important;
+}
+
+/* Remove borders and flatten chart slice completely */
+.dark-theme [data-test-viz-type="pie"] .chart-slice,
+.dark-theme .chart-slice {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none !important;
+}
+
+.dark-theme [data-test-viz-type="pie"] * {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.dark-theme .css-v2o9ep {
+  background-color: #1a1a1a !important;
+  border-radius: 4px !important;
+  padding: 4px !important;
+  margin: 4px !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Date range label */
+.dark-theme .date-range-badge {
+  position: absolute !important;
+  top: 0px !important;
+  right: 0px !important;
+  transform: translate(10px, -12px) !important;
+  background: rgb(30, 31, 31) !important;
+  color: #b2b2b9 !important;
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  padding: 8px 12px 6px 14px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(105, 105, 105, 0.15) !important;
+  z-index: 999 !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  pointer-events: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  justify-content: space-between !important;
+  line-height: 1.2 !important;
+  min-height: 32px !important;
+}
+
+/* Make pie chart label text white */
+.dark-theme tspan,
+.dark-theme text {
+  fill: white !important;
+  color: white !important;
+}
+
+/* Override pie chart label lines */
+.dark-theme g g path {
+  stroke: white !important;
+}
+
+.dark-theme .graphic text {
+  fill: white !important;
+}
+
+.dark-theme .legend-container,
+.dark-theme .legend-item {
+  color: white !important;
+  fill: white !important;
+}
+
+/* Force dark mode header */
+.dark-theme .header-with-actions,
+.dark-theme .dashboard-header,
+.dark-theme .dashboard-header-container,
+.dark-theme .header,
+.dark-theme .header-container,
+.dark-theme .navbar,
+.dark-theme .navbar-inner {
+  background: rgb(15, 15, 15) !important;
+  border-bottom: 2px solid #5d86a8ee !important;
+  box-shadow: none !important;
+}
+
+/* Refresh badge */
+.dark-theme .refresh-badge {
+  margin-left: auto !important;
+  background: #2c2b2b !important;
+  border: 3px solid #444749 !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  color: #ececec !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  animation: glow-pulse 3.0s infinite !important;
+}
+
+.dark-theme .clock-icon {
+  font-size: 24px !important;
+  margin-right: 4px !important;
+}
+
+.dark-theme .refresh-time {
+  color: #c3c3c4 !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+
+.dark-theme .refresh-text em {
+  color: #aaa !important;
+  font-size: 24px;
+}
+
+.dark-theme .refresh-label {
+  color: #fcfcfc !important;
+  font-size: 24px;
+}
+
+/* Header ellipsis menu button */
+.dark-theme button[data-test="actions-trigger"] {
+  background-color: #1a1a1a !important;
+  border-color: #333 !important;
+  color: #fff !important;
+}
+.dark-theme button[data-test="actions-trigger"]:hover {
+  background-color: #333 !important;
+  border-color: #4fc3f7 !important;
+}
+.dark-theme button[data-test="actions-trigger"] .anticon {
+  color: white !important;
+}
+
+/* BigNumber dark mode */
+.dark-theme .header-line {
+  color: white !important;
+}
+.dark-theme .header-title a {
+  color: #64b1d0 !important;
+}
+
+/* Table chart dark mode */
+.dark-theme .table.table-striped.table-condensed th,
+.dark-theme .table.table-striped.table-condensed th span,
+.dark-theme .table.table-striped.table-condensed th svg {
+  color: #ffffff !important;
+  fill: #ccc !important;
+  stroke: #ccc !important;
+  background-color: #111 !important;
+  border-bottom: 1px solid #1e1e1e !important;
+}
+
+.dark-theme .table.table-striped.table-condensed td {
+  background-color: #111 !important;
+  color: #a39d9d !important;
+  border-color: #333 !important;
+}
+
+.dark-theme body .table thead th,
+.dark-theme body[data-theme='dark'] .table thead th {
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+
+.dark-theme .table.table-striped.table-condensed tbody tr:first-child td {
+  border-top: none !important;
+}
+.dark-theme .chart-container {
+  transition: background-color 0.6s ease, color 0.6s ease !important;
+}

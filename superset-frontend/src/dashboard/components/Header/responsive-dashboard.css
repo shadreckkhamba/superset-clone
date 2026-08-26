@@ -1,0 +1,125 @@
+/* Responsive Dashboard Styles */
+
+/* Make modal wider */
+.avg-stay-modal-wrap .antd5-modal {
+  max-width: var(--avg-stay-modal-max-width, 95vw) !important;
+  width: var(--avg-stay-modal-width, 95vw) !important;
+}
+
+.avg-stay-modal .antd5-modal-content {
+  width: 100% !important;
+}
+
+/* Base responsive wrapper */
+.avg-stay-modal .responsive-chart-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure charts scale properly */
+.avg-stay-modal .responsive-chart-wrapper canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Modal content responsive adjustments */
+.avg-stay-modal .avg-stay-flex {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Chart cards responsive layout */
+.avg-stay-modal .chart-card {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Responsive font sizes for titles */
+@media (max-width: 1600px) {
+  .avg-stay-modal .chart-value {
+    font-size: clamp(2rem, 2.5vw, 3rem) !important;
+  }
+  
+  .avg-stay-modal .chart-label {
+    font-size: clamp(1.4rem, 1.8vw, 1.8rem) !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .avg-stay-modal .chart-value {
+    font-size: clamp(1.8rem, 2.2vw, 2.5rem) !important;
+  }
+  
+  .avg-stay-modal .chart-label {
+    font-size: clamp(1.2rem, 1.5vw, 1.6rem) !important;
+  }
+  
+  /* Stack cards vertically on smaller screens */
+  .avg-stay-modal .avg-stay-flex > div:first-of-type {
+    flex-direction: column !important;
+  }
+  
+  .avg-stay-modal .chart-card {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Ensure proper scaling at 100% zoom */
+@media (min-width: 1920px) {
+  .avg-stay-modal {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+}
+
+/* Handle very large screens */
+@media (min-width: 2560px) {
+  .avg-stay-modal .chart-value {
+    font-size: clamp(3rem, 3.5vw, 4rem) !important;
+  }
+  
+  .avg-stay-modal .chart-label {
+    font-size: clamp(1.8rem, 2vw, 2.4rem) !important;
+  }
+}
+
+/* Prevent overflow and ensure proper containment */
+.avg-stay-modal .antd5-modal-body {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* Chart container responsive behavior */
+.avg-stay-modal .chart-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+/* Responsive padding adjustments */
+@media (max-width: 1400px) {
+  .avg-stay-modal .avg-stay-flex {
+    padding: 0 clamp(4px, 0.5vw, 12px) clamp(4px, 0.5vw, 12px) clamp(4px, 0.5vw, 12px) !important;
+  }
+  
+  .avg-stay-modal .chart-card {
+    padding: clamp(8px, 1vw, 16px) !important;
+  }
+}
+
+/* Keep only the title text and logo compact; avoid blowing up all header spans */
+.avg-stay-modal .antd5-modal-header span[style*="Playfair Display"] {
+  font-size: clamp(0.9rem, 1.1vw, 18px) !important;
+  line-height: 1.05 !important;
+}
+
+.avg-stay-modal .antd5-modal-header img[alt="Logo"] {
+  height: clamp(12px, 1vw, 18px) !important;
+  width: auto !important;
+}

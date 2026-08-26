@@ -1,0 +1,34 @@
+coverage/*
+cypress/screenshots
+cypress/videos
+src/temp
+.temp_cache/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test reports
+test-report.html
+
+# Environment configuration (contains sensitive IPs/ports)
+src/config/env.config.js
+src/config/endpoints.js

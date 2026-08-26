@@ -1,0 +1,387 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# -----------------------------------------------------------------------
+# We don't support docker compose for production environments.
+# If you choose to use this type of deployment make sure to
+# create you own docker environment file (docker/.env) with your own
+# unique random secure passwords and SECRET_KEY.
+#
+# For verbose logging during development:
+# - Set SUPERSET_LOG_LEVEL=debug in docker/.env-local for detailed Superset logs
+# -----------------------------------------------------------------------
+
+x-superset-user: &superset-user root
+
+x-superset-volumes: &superset-volumes
+  # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
+  - ./docker:/app/docker
+  - ./superset:/app/superset
+  - ./superset-core:/app/superset-core
+  - ./superset-frontend-clean:/app/superset-frontend
+  - superset_home:/app/superset_home
+  - ./tests:/app/tests
+  - superset_data:/app/data
+  - ./local_extensions:/app/local_extensions
+
+x-common-build: &common-build
+  context: .
+  target: ${SUPERSET_BUILD_TARGET:-dev}
+  cache_from:
+    - apache/superset-cache:3.11-slim-trixie
+  args:
+    DEV_MODE: "true"
+    INCLUDE_CHROMIUM: ${INCLUDE_CHROMIUM:-false}
+    INCLUDE_FIREFOX: ${INCLUDE_FIREFOX:-false}
+    BUILD_TRANSLATIONS: ${BUILD_TRANSLATIONS:-false}
+
+services:
+
+  # ============================================================
+  # REDIS
+  # ============================================================
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    #ports:
+    #  - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis:/data
+
+  # ============================================================
+  # DATABASE
+  # ============================================================
+
+  db:
+    env_file:
+      - path: docker/.env
+        required: true
+      - path: docker/.env-local
+        required: false
+
+    image: postgres:16
+    restart: unless-stopped
+
+    #ports:
+    #  - "127.0.0.1:${DATABASE_PORT:-5432}:5432"
+
+    volumes:
+      - db_home:/var/lib/postgresql/data
+      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  # ============================================================
+  # SUPERSET APPLICATION - INSTANCE 2
+  # ============================================================
+
+  superset:
+    env_file:
+      - path: docker/.env
+        required: true
+      - path: docker/.env-local
+        required: false
+
+    build:
+      <<: *common-build
+
+    container_name: superset2_app
+
+    command: ["/app/docker/docker-bootstrap.sh", "app"]
+
+    restart: unless-stopped
+
+    # Do NOT expose Superset directly to the host.
+    # nginx-proxy reaches it through superset_proxy.
+    #
+    #ports:
+    #  - ${SUPERSET_PORT:-8088}:8088
+    #  - ${CYPRESS_PORT:-8081}:8081
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    user: *superset-user
+
+    depends_on:
+      superset-init:
+        condition: service_completed_successfully
+
+    volumes: *superset-volumes
+
+    networks:
+      - default
+      - superset_proxy
+
+  # ============================================================
+  # SUPERSET WEBSOCKET - INSTANCE 2
+  # ============================================================
+
+  superset-websocket:
+    container_name: superset2_websocket
+
+    build: ./superset-websocket
+
+    # Do NOT expose directly to host.
+    # nginx-proxy reaches it through superset_proxy.
+    #
+    #ports:
+    #  - ${WEBSOCKET_PORT:-8080}:8080
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    depends_on:
+      - redis
+
+    volumes:
+      - ./superset-websocket:/home/superset-websocket
+      - /home/superset-websocket/node_modules
+      - /home/superset-websocket/dist
+      - ./docker/superset-websocket/config.example.json:/home/superset-websocket/config.json:ro
+
+    environment:
+      - PORT=8080
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_SSL=false
+
+    networks:
+      - default
+      - superset_proxy
+
+  # ============================================================
+  # SUPERSET INIT
+  # ============================================================
+
+  superset-init:
+    build:
+      <<: *common-build
+
+    command: ["/app/docker/docker-init.sh"]
+
+    env_file:
+      - path: docker/.env
+        required: true
+      - path: docker/.env-local
+        required: false
+
+    depends_on:
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+
+    user: *superset-user
+
+    volumes: *superset-volumes
+
+    healthcheck:
+      disable: true
+
+  # ============================================================
+  # FRONTEND / WEBPACK - INSTANCE 2
+  # ============================================================
+
+  superset-node:
+    container_name: superset2_node
+
+    build:
+      context: .
+      target: superset-node
+
+      args:
+        DEV_MODE: "true"
+        BUILD_TRANSLATIONS: ${BUILD_TRANSLATIONS:-false}
+
+    environment:
+
+      # Build frontend inside the container
+      BUILD_SUPERSET_FRONTEND_IN_DOCKER: true
+
+      NPM_RUN_PRUNE: false
+
+      SCARF_ANALYTICS: "${SCARF_ANALYTICS:-}"
+
+      # Instance 2 webpack proxies to Instance 2 Superset backend
+      superset: "http://superset2_app:8088"
+
+      # Webpack must listen on all interfaces
+      WEBPACK_DEVSERVER_HOST: "0.0.0.0"
+
+      # Instance 2 HMR websocket path
+      WDS_SOCKET_PATH: "/superset2/ws"
+
+    # IMPORTANT:
+    # No host port is published here.
+    # nginx-proxy reaches superset2_node:9000 over superset_proxy.
+    #
+    #ports:
+    #  - "9001:9000"
+
+    command: ["/app/docker/docker-frontend.sh"]
+
+    env_file:
+      - path: docker/.env
+        required: true
+      - path: docker/.env-local
+        required: false
+
+    volumes: *superset-volumes
+
+    networks:
+      - default
+      - superset_proxy
+
+  # ============================================================
+  # CELERY WORKER
+  # ============================================================
+
+  superset-worker:
+    build:
+      <<: *common-build
+
+    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+
+    env_file:
+      - path: docker/.env
+        required: true
+      - path: docker/.env-local
+        required: false
+
+    environment:
+      CELERYD_CONCURRENCY: 2
+
+    restart: unless-stopped
+
+    depends_on:
+      superset-init:
+        condition: service_completed_successfully
+
+    user: *superset-user
+
+    volumes: *superset-volumes
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "celery -A superset.tasks.celery_app:app inspect ping -d celery@$$HOSTNAME"
+        ]
+
+  # ============================================================
+  # CELERY BEAT
+  # ============================================================
+
+  superset-worker-beat:
+    build:
+      <<: *common-build
+
+    command: ["/app/docker/docker-bootstrap.sh", "beat"]
+
+    env_file:
+      - path: docker/.env
+        required: true
+      - path: docker/.env-local
+        required: false
+
+    restart: unless-stopped
+
+    depends_on:
+      - superset-worker
+
+    user: *superset-user
+
+    volumes: *superset-volumes
+
+    healthcheck:
+      disable: true
+
+  # ============================================================
+  # TEST WORKER
+  # ============================================================
+
+  superset-tests-worker:
+    build:
+      <<: *common-build
+
+    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+
+    env_file:
+      - path: docker/.env
+        required: true
+      - path: docker/.env-local
+        required: false
+
+    profiles:
+      - optional
+
+    environment:
+      DATABASE_HOST: localhost
+      DATABASE_DB: test
+      REDIS_CELERY_DB: 2
+      REDIS_RESULTS_DB: 3
+      REDIS_HOST: localhost
+      CELERYD_CONCURRENCY: 8
+
+    network_mode: host
+
+    depends_on:
+      superset-init:
+        condition: service_completed_successfully
+
+    user: *superset-user
+
+    volumes: *superset-volumes
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "celery inspect ping -A superset.tasks.celery_app:app -d celery@$$HOSTNAME"
+        ]
+
+# ================================================================
+# VOLUMES
+# ================================================================
+
+volumes:
+  superset_home:
+    external: false
+
+  db_home:
+    external: false
+
+  redis:
+    external: false
+
+  superset_data:
+    external: false
+
+# ================================================================
+# NETWORKS
+# ================================================================
+
+networks:
+  default:
+    name: superset_default
+
+  superset_proxy:
+    name: superset_proxy
+    external: true

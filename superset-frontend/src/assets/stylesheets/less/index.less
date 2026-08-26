@@ -1,0 +1,678 @@
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+// Index .less, any imports here will be included in the final css build
+
+@import '~bootstrap/less/bootstrap.less';
+@import './fonts.less';
+@import './variables.less';
+@import './cosmo/bootswatch.less';
+
+html,
+body {
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  flex: 0 1 auto;
+}
+
+#app {
+  flex: 1 1 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.dashboard .dashboard-component .chart-header .header-title,
+.dashboard .dashboard-component .header-title,
+.dashboard .header-title {
+  font-size: 32px !important;
+  font-weight: 400 !important;
+  color: #111 !important;
+}
+div[class*='dashboard'] h1,
+div[class*='dashboard'] .header-title {
+  font-size: 32px !important;
+}
+/* Force legend font size for ECharts */
+.dashboard .echarts svg text {
+  font-size: 16px !important;
+  fill: red !important; // test color
+}
+.dashboard .echarts .legend-item,
+.dashboard .echarts .legend {
+  font-size: 16px !important;
+  color: red !important; // test color
+}
+.dashboard .nv-legend text {
+  font-size: 16px !important;
+  fill: red !important; // test color
+}
+.dashboard {
+  background-color: #f2f2f2 !important; /* light grey */
+  padding: 16px; /* optional: space around the charts */
+}
+
+.grid-container {
+  background-color: #f2f2f2 !important;
+}
+.dynamic-title {
+  font-size: 32px !important;
+  font-weight: 600; 
+  color: #333;
+}
+/* Ensure all parent containers don't restrict layout */
+.header-with-actions,
+.dashboard-header,
+.page-header-container,
+.header {
+  overflow: visible !important;
+  height: auto !important;        /* Revert any enlarged height */
+  min-height: unset !important;   /* Remove min-height forcing */
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Final logo style fix */
+.dashboard-title-logo {
+  position: absolute;
+  top: 0;
+  left: -13px; /* Adjust as needed */
+  width: 142px;
+  height: auto;
+  max-height: 87px;
+  object-fit: contain; /* Preserve aspect ratio */
+  z-index: 10;
+  //outline: 2px solid blue !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+/* Title panel layout */
+.title-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 8px !important;
+  min-width: 268px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Remove the margin offset - using flexbox gap instead */
+.title-panel > .editable-title,
+.title-panel > div:not(.dashboard-title-logo) {
+  margin-left: 0;
+}
+
+.title-panel > .dashboard-logo {
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.title-panel > .editable-title {
+  flex: 1 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.editable-title span {
+  color: #64a0d0 !important;
+  font-weight: 600 !important;
+  font-size: 32px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+/* Table cell height */
+.custom-large-text-table td {
+  height: 10px !important;
+  min-height: 10px !important;
+  padding: 2px 6px !important;
+  line-height: 1.3 !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+/* Table chart header*/
+.custom-large-text-table th {
+  height: 12px !important;
+  min-height: 12px !important;
+  padding: 4px 8px !important;
+  font-size: 21px !important;
+  line-height: 1.3 !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+/* Ensure row also matches */
+.custom-large-text-table tr {
+  height: 8px !important;
+  min-height: 10px !important;
+}
+
+/* Cell bar perfectly fills cell */
+.custom-large-text-table .cell-bar {
+  height: 100% !important;
+  top: 0 !important;
+  border-radius: 1px;
+}
+.custom-large-text-table td {
+  font-size: 18px !important;
+  /*font-weight: bold !important*/
+  color: #333; /* optional: tweak text color for contrast */
+}
+/* Decrease gap bewteen dashboards and the sidebar */
+.dashboard-content {
+  max-width: 100% !important;
+  margin-right: 4px !important;
+}
+/* Remove right padding/margin from all key dashboard wrappers */
+.dashboard,
+.dashboard-grid,
+.dashboard-inner,
+.dashboard-content {
+  padding-right: 4px !important;
+  margin-right: 4px !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* This ensures scroll area is tight */
+.grid-container {
+  padding-right: 4px !important;
+  margin-right: 4px !important;
+}
+
+/* make all dashboard components fill full width */
+.dashboard-component {
+  max-width: 100% !important;
+}
+/* Slight space below the dashboard header */
+.dashboard-header {
+  margin-bottom: 3px !important;
+  padding-bottom: 0 !important;
+}
+
+/* Slight gap between header and content */
+.dashboard-header + div,
+.dashboard-inner,
+.dashboard-content,
+.grid-container {
+  margin-top: 3px !important;
+  padding-top: 0 !important;
+}
+
+/* Optional: keep title bar itself tight */
+.dashboard-header .header-title {
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(2, 74, 146, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(2, 74, 146, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(145, 215, 255, 0);
+  }
+}
+
+.refresh-badge {
+  margin-left: auto;
+  background: #eef9ff;
+  border: 2px solid #91d5ff;
+  padding: 3px 7px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #003366;
+  display: flex;
+  align-items: center;
+  position: relative;
+  animation: glow-pulse 3.0s infinite;
+}
+.refresh-badge .clock-icon {
+  margin-right: 10px;
+  font-size: 19px;
+}
+/* Label text only */
+.refresh-badge .refresh-text {
+  font-weight: 500;
+}
+/* Actual time only */
+.refresh-badge .refresh-time {
+  font-weight: 600;
+  /* Add any other style you want here */
+}
+.dashboard-title-with-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+
+  .dashboard-logo {
+    height: 60px !important;
+    width: auto !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .editable-title,
+  .dynamic-title {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+}
+
+
+
+/* Hide the main menu
+#main-menu {
+  display: none !important;
+}*/
+.avg-stay-button {
+  background: #ffffff !important;               
+  color: #5a9bcf !important;                  
+  font-weight: 700 !important;
+  font-size: 19px !important;
+  padding: 13px 20px !important;
+  min-height: 47px !important;
+  min-width: 134px !important;
+  border-radius: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;          
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12),    
+              inset 0 1px 2px rgba(0,0,0,0.08) !important; 
+  cursor: pointer !important;
+
+  img {
+    width: 43px !important;
+    height: 43px !important;
+  }
+
+  &:active {
+    box-shadow: inset 2px 2px 6px rgba(0,0,0,0.1) !important;
+    transform: translateY(0) scale(1.0) !important;
+  }
+}
+
+/* Extra spacing to separate Avg Stay button from other buttons */
+.avg-stay-button-container {
+  margin-right: 27px !important;
+  display: flex !important;
+}
+
+
+/* Small helper for the header button spacing */
+.avg-stay-button-container {
+  margin-right: 27px !important;
+  display: flex !important;
+}
+/* This is the key selector */
+.avg-stay-modal .ant-modal-content {
+  border-radius: 20px !important;
+  overflow: hidden !important; /* makes radius visible */
+}
+
+.avg-stay-modal-wrapper {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25) !important;
+  margin: 12px auto !important;    /* small inset so rounded corners are visible */
+  max-width: 96% !important;
+  margin-top: 6px !important;
+}
+
+.avg-stay-modal .ant-modal-wrap {
+  align-items: flex-start !important;
+  height: 100vh !important;
+  padding-top: 0 !important;
+  background-color: #000;
+}
+
+.avg-stay-modal .ant-modal {
+  border-radius: 32px !important;
+  overflow: hidden !important;
+  height: 100vh !important;
+  margin: 0 auto !important;
+}
+
+.avg-stay-modal .ant-modal-content {
+  border-radius: 32px !important;
+  overflow: hidden !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+}
+
+.avg-stay-modal .ant-modal-body {
+  height: 100% !important;
+  padding: 0 !important;
+  overflow: hidden !important;       
+  background: rgba(0, 0, 0, 0.18) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+
+.avg-stay-modal-content {
+  height: 100% !important;
+  display: flex;
+  flex-direction: column !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+.avg-stay-flex {
+  padding-top: 8px !important;
+  padding-bottom: 40px !important;
+}
+
+/* tighten title spacing */
+.avg-stay-flex .chart-value,
+.avg-stay-flex h1 {
+  margin-top: 0 !important;
+}
+
+.avg-stay-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 20px !important;
+  width: 100% !important;
+  height: 100% !important;        
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* --- individual card -------------------------------------------------- */
+.chart-card {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-radius: 24px !important;
+  padding: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important; /* start at top, content stacks naturally */
+  align-items: center !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12) !important;
+  flex: 1 1 auto !important;       /* allow cards to grow */
+  min-height: 0 !important;        /* prevents intrinsic min-height issues in grid */
+  overflow: hidden !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+/* subtle hover lift */
+.chart-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.16) !important;
+}
+
+/* Title/value inside card */
+.chart-card .chart-value {
+  font-size: 1.8rem;              
+  margin: 6px 0 10px 0 !important;
+  color: #0b57a4 !important;
+  font-weight: 700 !important;
+}
+
+/* Label under the value */
+.chart-card .chart-label {
+  font-size: 2.5rem !important;
+  margin: 0 0 12px 0 !important;
+  color: #333 !important;
+  text-align: center;
+}
+
+/* Placeholder area for charts (keeps aspect and scrolling) */
+.chart-card .chart-placeholder {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  border-radius: 24px !important;
+  background-color: #f5f5f5 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 2.5rem !important;
+  color: #8a8a8a !important;
+  overflow: hidden !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Wide card spans both columns and uses the full height of the second row */
+.chart-card-wide {
+  grid-column: 1 / -1 !important;  /* span both columns reliably */
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .avg-stay-modal-wrapper { margin: 8px !important; }
+  .avg-stay-modal .ant-modal { width: 96% !important; }
+  .avg-stay-grid { grid-template-columns: 1fr !important; grid-template-rows: auto auto auto !important; }
+  .chart-card-wide { grid-column: auto !important; }
+  .chart-card .chart-value { font-size: 1.4rem; }
+  .chart-card .chart-label { font-size: 0.95rem; }
+}
+
+.avg-stay-modal .ant-modal-wrap::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: -1;
+  pointer-events: none;
+}
+/* Scrollable inner area */
+.avg-stay-scroll {
+  flex: 1 1 auto;
+  height: 100%;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+
+/* keep modal fixed size */
+.avg-stay-modal .ant-modal-body {
+  height: 100% !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+/* global.css (or component CSS imported at top level) */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.icon-spin {
+  animation: spin 1s linear infinite;   /* change duration as needed */
+  transform-origin: center;
+  transform-box: fill-box;              /* required for some SVGs */
+  display: inline-block;
+}
+.chart-card canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.avg-stay-modal .ant-modal-body {
+  position: relative;
+  overflow: hidden; /* ensures gradient doesn't spill out */
+}
+
+.avg-stay-modal .ant-modal-body::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important; /* always attach to the bottom */
+  left: 0 !important;
+  width: 100% !important;
+  height: 80px !important; /* control how tall the gradient is */
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.95)) !important;
+  pointer-events: none !important; /* make sure it doesn’t block clicks */
+}
+
+/* Make the modal wrapper size to content (don't force full 100vh) */
+.avg-stay-modal .ant-modal-wrap {
+  align-items: flex-start !important;   
+  height: auto !important;
+  padding-top: 20px !important;
+}
+
+/* Limit modal height to viewport and allow natural content sizing */
+.avg-stay-modal .ant-modal {
+  height: auto !important;
+  max-height: 95vh !important;
+  margin: 0 auto !important;
+}
+
+/* Allow modal content area to be constrained and scrollable */
+.avg-stay-modal .ant-modal-content {
+  height: auto !important;
+  max-height: 95vh !important;
+  overflow: visible !important;
+}
+
+/* let the modal body scroll instead of hiding overflow */
+.avg-stay-modal .ant-modal-body {
+  height: auto !important;
+  max-height: 85vh !important;     
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  display: block !important;
+  padding: 0 !important;
+  background: rgba(0, 0, 0, 0.18) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+/* Make your modal content wrapper behave as a column and not force overflow:hidden */
+.avg-stay-modal-content {
+  height: auto !important;
+  max-height: 85vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+/* Use a dedicated scroll wrapper inside the modal. Ensure it can shrink correctly. */
+.avg-stay-scroll {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;        /* critical for flex children to allow scrolling in Chrome/Firefox */
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Keep the bottom wide card tall and prevent it from being squeezed */
+.chart-card.chart-card-wide {
+  flex: none !important;
+  height: 1000px !important;       
+  min-height: 1000px !important;
+  overflow: visible !important;
+}
+
+/* Responsive fallback: smaller fixed card height on short screens */
+@media (max-height: 900px) {
+  .avg-stay-modal .ant-modal-body,
+  .avg-stay-modal-content {
+    max-height: 80vh !important;
+  }
+  .chart-card.chart-card-wide {
+    height: 720px !important;
+    min-height: 720px !important;
+  }
+}
+
+/* Ensure gradient overlay doesn't block pointer events */
+.avg-stay-modal .ant-modal-body::after {
+  pointer-events: none !important;
+}
+
+/* Custom period menu styling */
+/* Custom period menu styling */
+.custom-period-menu .ant-dropdown-menu {
+  border-radius: 16px !important;        /* rounded corners */
+  overflow: hidden !important;           /* ensure no overflow */
+  font-size: 19px !important;            /* base font size */
+  min-width: 180px !important;           /* adjust width */
+  background-color: #ffffff !important;  /* white background */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;  /* subtle shadow */
+  padding: 8px 0 !important;             /* vertical spacing */
+}
+
+/* Style individual menu items */
+.custom-period-menu .ant-dropdown-menu-item {
+  font-size: 19px !important;
+  padding: 8px 16px !important;
+  color: #212529 !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+/* Hover/active states */
+.custom-period-menu .ant-dropdown-menu-item:hover,
+.custom-period-menu .ant-dropdown-menu-item-active {
+  background-color: #1890ff !important;
+  color: #fff !important;
+}
+
+/* Hide the AntD modal header */
+.avg-stay-modal .ant-modal-header {
+  display: none !important;
+}
+
+/* Make the modal wrap fully transparent */
+.avg-stay-modal .ant-modal-wrap {
+  background: transparent !important;
+  padding-top: 0 !important;       /* remove top spacing */
+  align-items: flex-start !important; /* top align modal content */
+}
+
+/* Make modal content background fully transparent */
+.avg-stay-modal .ant-modal-content {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Make modal body fully fill content */
+.avg-stay-modal .ant-modal-body {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important; /* remove default gray */
+  overflow: visible !important;
+}
+.avg-stay-modal-wrap .ant-modal-wrap {
+  padding-top: 0 !important;
+  align-items: flex-start !important;
+}

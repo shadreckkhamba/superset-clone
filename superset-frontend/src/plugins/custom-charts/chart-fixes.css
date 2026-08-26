@@ -1,0 +1,719 @@
+/* CSS fixes for custom chart height issues */
+
+/* Prevent charts from growing endlessly on zoom */
+.chart-container {
+  max-height: 600px !important;
+  min-height: 400px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure chart canvas respects container bounds */
+.chart-container canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* Keep RunChartStay canvas anchored to container height (no vertical centering gap) */
+.run-stay-chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: unset !important;
+  display: block !important;
+}
+
+.run-stay-chart-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+}
+
+/* Prevent text from scaling beyond readable sizes */
+.chart-text {
+  font-size: clamp(0.8rem, 2vw, 1.5rem) !important;
+}
+
+/* Fix for responsive containers */
+.responsive-chart-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Allow specific chart wrappers to shrink to content */
+.big-number-stay-wrapper,
+.pie-stay-wrapper {
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Pie chart container should not inherit the global chart-container min-height */
+.pie-stay-chart-container {
+  min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
+}
+
+.pie-stay-chart-container canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+}
+
+@media (max-width: 1200px) {
+  .pie-stay-wrapper,
+  .pie-stay-wrapper .pie-stay-body {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+  }
+
+  .pie-stay-wrapper .chart-container {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .pie-stay-wrapper .pie-stay-chart-container {
+    min-height: 0 !important;
+  }
+
+  .pie-stay-wrapper .pie-stay-legend-wrapper {
+    padding-top: 6px !important;
+  }
+
+  .patient-stay-card--pie {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+}
+
+@media (max-height: 820px) {
+  .pie-stay-wrapper,
+  .pie-stay-wrapper .pie-stay-body {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+  }
+
+  .pie-stay-wrapper .pie-stay-chart-container {
+    min-height: 0 !important;
+  }
+
+  .pie-stay-wrapper .pie-stay-legend-wrapper {
+    padding-top: 6px !important;
+  }
+
+  .patient-stay-card--pie {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+}
+
+/* Hide scrollbars inside BigNumberStay */
+.big-number-stay-wrapper .stay-day-scroller {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.big-number-stay-wrapper .stay-day-scroller::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Ensure no straight underline from inline styles */
+.big-number-stay-wrapper .day-selector-item {
+  border-bottom: none !important;
+}
+
+/* Must come after .responsive-chart-wrapper to beat its !important height caps */
+.responsive-chart-wrapper.run-stay-responsive-wrapper {
+  height: 100% !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Prevent transform scaling from affecting layout */
+.chart-element {
+  transform-origin: center center !important;
+}
+
+/* Ensure tooltips don't cause overflow */
+.chartjs-tooltip {
+  max-width: 300px !important;
+  word-wrap: break-word !important;
+  font-size: 14px !important;
+}
+
+.chartjs-tooltip.tooltip-pop-bounce {
+  animation: tooltipPopBounce 520ms cubic-bezier(0.22, 0.9, 0.32, 1.24);
+}
+
+@keyframes tooltipPopBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(34px) scale(0.78);
+  }
+  58% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.05);
+  }
+  80% {
+    transform: translateY(3px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Heatmap Container Animation */
+.heatmap-container {
+  will-change: transform, opacity;
+}
+
+.heatmap-container.mounted {
+  animation: heatmapBounceUp 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.heatmap-container:not(.mounted) {
+  transform: translateY(60px);
+  opacity: 0;
+}
+
+@keyframes heatmapBounceUp {
+  0% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Slide-up animation with smooth easing */
+@keyframes slideUpFade {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Heatmap box stagger animation */
+.heatmap-box {
+  will-change: background-color, transform;
+}
+
+.heatmap-box:hover {
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes boxFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Time indicators animation */
+.heatmap-time-indicators {
+  animation: fadeInDown 0.6s ease-out 0.1s forwards;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Curved underline for BigNumberStay day selector */
+.big-number-stay-wrapper .day-selector-item {
+  position: relative;
+  text-decoration: none !important;
+}
+
+/* Smooth underline transition between days */
+.big-number-stay-wrapper .day-selector-item::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -1px;
+  height: 4px;
+  border-bottom: 2.5px solid #1890ff;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 3px rgba(24, 144, 255, 0.2);
+  pointer-events: none;
+  transform: scaleX(0.2);
+  opacity: 0;
+  transition: transform 220ms cubic-bezier(0.22, 0.9, 0.32, 1.2), opacity 180ms ease;
+}
+
+.big-number-stay-wrapper .day-selector-item.selected::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+[data-theme="dark"] .big-number-stay-wrapper .day-selector-item.selected::after {
+  border-bottom-color: #40a9ff;
+  box-shadow: 0 2px 6px rgba(64, 169, 255, 0.45);
+}
+
+/* PieChart Emerging Animations */
+.info-box-emerge {
+  animation: slideLeftFade 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.info-box-emerge:not(.emerged) {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+.info-box-emerge.emerged {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@keyframes slideLeftFade {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.pie-emerge {
+  animation: zoomFade 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.pie-emerge:not(.emerged) {
+  transform: scale(0.85);
+  opacity: 0;
+}
+
+.pie-emerge.emerged {
+  transform: scale(1);
+  opacity: 1;
+}
+
+@keyframes zoomFade {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.legend-emerge {
+  animation: slideRightFade 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.legend-emerge:not(.emerged) {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+.legend-emerge.emerged {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@keyframes slideRightFade {
+  0% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+/* ===== RESPONSIVE SCALING FIXES ===== */
+
+/* Ensure charts scale properly at all zoom levels */
+@media (min-width: 1920px) {
+  .chart-container {
+    max-height: 100% !important;
+  }
+  
+  .responsive-chart-wrapper {
+    max-height: 100% !important;
+  }
+}
+
+/* Responsive font scaling for chart elements */
+@media (max-width: 1600px) {
+  .chartjs-tooltip {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .chartjs-tooltip {
+    font-size: 10px !important;
+    max-width: 250px !important;
+  }
+}
+
+/* Prevent charts from being too small on smaller screens */
+@media (max-width: 1024px) {
+  .chart-container {
+    min-height: 300px !important;
+  }
+  
+  .responsive-chart-wrapper {
+    min-height: 300px !important;
+  }
+}
+
+/* Ensure proper scaling on high DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .chart-container canvas,
+  .responsive-chart-wrapper canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Fix for container height at 100% browser zoom */
+.avg-stay-modal .chart-card {
+  contain: layout style !important;
+}
+
+/* Ensure canvas respects parent dimensions */
+canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+/* Prevent overflow in modal */
+.avg-stay-modal .antd5-modal-body {
+  contain: layout !important;
+}
+
+/* ===== MODAL HEADER LOGO AND TITLE FIXES ===== */
+
+/* Fix for modal header logo and title sizing to prevent header from being too broad */
+.antd5-modal-title {
+  max-width: 100% !important;
+}
+
+.antd5-modal-title > div {
+  max-width: 100% !important;
+}
+
+/* Target the logo image in modal headers - make it smaller */
+.antd5-modal-title img[alt="Logo"] {
+  height: clamp(10px, 0.8vw, 16px) !important;
+  width: auto !important;
+  flex-shrink: 0 !important;
+}
+
+/* Target the title text in modal headers - make it smaller and more compact */
+.antd5-modal-title span[style*="Playfair Display"],
+.antd5-modal-title span[style*="background-image: linear-gradient"] {
+  font-size: clamp(0.75rem, 0.9vw, 14px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.1px !important;
+}
+
+/* Ensure the flex container doesn't get too tall */
+.antd5-modal-title > div[style*="display: flex"][style*="flex-direction: column"] {
+  gap: 2px !important;
+}
+
+/* Reduce gap between logo and title */
+.antd5-modal-title > div > div[style*="display: flex"][style*="align-items: center"] {
+  gap: 4px !important;
+}
+
+/* Ensure modal header itself doesn't get too tall */
+.antd5-modal-header {
+  padding: 12px 16px !important;
+  min-height: auto !important;
+}
+
+/* ===== DARK MODE FIXES FOR MENU ACTIONS BUTTON ===== */
+
+/* More specific selectors for menu actions button in dark mode */
+[data-theme="dark"] .antd5-btn.antd5-btn-default.antd5-btn-color-default.antd5-btn-variant-outlined.antd5-dropdown-trigger,
+[data-theme="dark"] .superset-button.superset-button-tertiary.antd5-dropdown-trigger,
+[data-theme="dark"] button[data-test="actions-trigger"] {
+  background-color: rgba(45, 45, 45, 0.9) !important;
+  border-color: rgba(64, 64, 64, 0.8) !important;
+  color: #e0e0e0 !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme="dark"] .antd5-btn.antd5-btn-default.antd5-btn-color-default.antd5-btn-variant-outlined.antd5-dropdown-trigger:hover,
+[data-theme="dark"] .superset-button.superset-button-tertiary.antd5-dropdown-trigger:hover,
+[data-theme="dark"] button[data-test="actions-trigger"]:hover {
+  background-color: rgba(64, 64, 64, 0.9) !important;
+  border-color: rgba(96, 96, 96, 0.9) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .antd5-btn.antd5-btn-default .anticon,
+[data-theme="dark"] .superset-button.superset-button-tertiary .anticon,
+[data-theme="dark"] button[data-test="actions-trigger"] .anticon {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .antd5-btn.antd5-btn-default:hover .anticon,
+[data-theme="dark"] .superset-button.superset-button-tertiary:hover .anticon,
+[data-theme="dark"] button[data-test="actions-trigger"]:hover .anticon {
+  color: #ffffff !important;
+}
+
+/* Alternative approach - target by class combinations */
+.antd5-btn.antd5-btn-default.antd5-btn-color-default.antd5-btn-variant-outlined[data-theme="dark"],
+body[data-theme="dark"] .antd5-btn.antd5-btn-default.antd5-btn-color-default.antd5-btn-variant-outlined,
+html[data-theme="dark"] .antd5-btn.antd5-btn-default.antd5-btn-color-default.antd5-btn-variant-outlined {
+  background-color: rgba(45, 45, 45, 0.9) !important;
+  border-color: rgba(64, 64, 64, 0.8) !important;
+  color: #e0e0e0 !important;
+}
+
+/* Global dark mode override */
+body.dark-mode .antd5-btn.antd5-btn-default,
+.dark .antd5-btn.antd5-btn-default,
+[data-bs-theme="dark"] .antd5-btn.antd5-btn-default {
+  background-color: rgba(45, 45, 45, 0.9) !important;
+  border-color: rgba(64, 64, 64, 0.8) !important;
+  color: #e0e0e0 !important;
+}
+
+/* ===== SCROLLBAR FIXES ===== */
+
+/* Hide duplicate scrollbars in dashboard - more specific targeting */
+.dashboard-component-tabs-content,
+.dashboard-component-chart-holder,
+.dashboard-grid,
+.grid-container,
+.dashboard-content {
+  overflow: visible !important;
+}
+
+/* Ensure main dashboard container handles scrolling */
+.dashboard-component-tabs-content > div,
+.dashboard-component-chart-holder > div {
+  overflow: visible !important;
+}
+
+/* Target the main dashboard wrapper */
+.dashboard,
+.dashboard-container,
+.dashboard-component-tabs {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Fix for modal scrollbars */
+.antd5-modal-body,
+.antd5-modal-content,
+.antd5-modal-wrap {
+  overflow: hidden !important;
+}
+
+/* Prevent body scrollbar when modal is open */
+body.antd5-modal-open {
+  overflow: hidden !important;
+}
+
+/* Target specific dashboard components */
+.dashboard-component[data-test="dashboard-component-chart-holder"] {
+  overflow: visible !important;
+}
+
+.dashboard-component[data-test="dashboard-component-tabs-content"] {
+  overflow: visible !important;
+}
+
+/* Grid layout fixes */
+.react-grid-layout {
+  overflow: visible !important;
+}
+
+.react-grid-item {
+  overflow: visible !important;
+}
+
+/* Custom scrollbar styling for dark mode */
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: rgba(45, 45, 45, 0.3);
+  border-radius: 4px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(96, 96, 96, 0.6);
+  border-radius: 4px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.8);
+}
+
+/* Light mode scrollbar */
+[data-theme="light"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: rgba(240, 240, 240, 0.5);
+  border-radius: 4px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(160, 160, 160, 0.6);
+  border-radius: 4px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.8);
+}
+
+/* ===== RESPONSIVE DASHBOARD VIEW SWITCH ===== */
+
+/* Responsive dashboard view switch */
+[data-test="dashboard-view-switch"] {
+  padding: clamp(10px, 2.5vw, 14px) clamp(14px, 3.5vw, 20px) !important;
+  gap: clamp(8px, 2vw, 12px) !important;
+  margin-left: clamp(20px, 4vw, 45px) !important;
+  border-width: clamp(1px, 0.2vw, 2px) !important;
+  box-shadow: rgba(15, 23, 42, 0.15) 0px clamp(6px, 1.5vw, 12px) clamp(20px, 5vw, 40px), 
+              rgba(15, 23, 42, 0.1) 0px clamp(2px, 0.5vw, 4px) clamp(6px, 1.5vw, 12px) !important;
+}
+
+[data-test="dashboard-view-switch"] > div {
+  gap: clamp(8px, 2vw, 12px) !important;
+}
+
+[data-test="dashboard-view-switch"] span {
+  font-size: clamp(12px, 2.5vw, 14px) !important;
+}
+
+[data-test="dashboard-view-switch"] .antd5-switch {
+  transform: scale(clamp(0.9, 0.2vw + 0.9, 1.15)) !important;
+}
+
+/* Responsive adjustments for very small screens */
+@media (max-width: 480px) {
+  [data-test="dashboard-view-switch"] {
+    top: clamp(24px, 6vw, 32px) !important;
+    padding: 8px 12px !important;
+    gap: 6px !important;
+    margin-left: 20px !important;
+  }
+  
+  [data-test="dashboard-view-switch"] span {
+    font-size: 11px !important;
+  }
+  
+  [data-test="dashboard-view-switch"] .antd5-switch {
+    transform: scale(0.85) !important;
+  }
+}
+
+/* Responsive adjustments for medium screens */
+@media (min-width: 481px) and (max-width: 768px) {
+  [data-test="dashboard-view-switch"] {
+    padding: 10px 16px !important;
+    gap: 8px !important;
+    margin-left: 30px !important;
+  }
+  
+  [data-test="dashboard-view-switch"] span {
+    font-size: 12px !important;
+  }
+  
+  [data-test="dashboard-view-switch"] .antd5-switch {
+    transform: scale(0.95) !important;
+  }
+}
+
+/* Responsive adjustments for large screens */
+@media (min-width: 1200px) {
+  [data-test="dashboard-view-switch"] {
+    padding: 14px 20px !important;
+    gap: 12px !important;
+    margin-left: 45px !important;
+  }
+  
+  [data-test="dashboard-view-switch"] span {
+    font-size: 14px !important;
+  }
+  
+  [data-test="dashboard-view-switch"] .antd5-switch {
+    transform: scale(1.15) !important;
+  }
+}
+
+/* Dark mode adjustments for the switch */
+[data-theme="dark"] [data-test="dashboard-view-switch"] {
+  background-color: rgba(45, 45, 45, 0.95) !important;
+  border-color: rgba(96, 96, 96, 0.6) !important;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px clamp(6px, 1.5vw, 12px) clamp(20px, 5vw, 40px), 
+              rgba(0, 0, 0, 0.25) 0px clamp(2px, 0.5vw, 4px) clamp(6px, 1.5vw, 12px) !important;
+}
+
+[data-theme="dark"] [data-test="dashboard-view-switch"] span {
+  color: #e0e0e0 !important;
+}
