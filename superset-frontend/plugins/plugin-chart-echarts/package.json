@@ -28,7 +28,7 @@
     "d3-array": "^1.2.0",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.312.0",
+    "lucide-react": "^1.33.0",
     "recharts": "^2.12.0"
   },
   "peerDependencies": {
