@@ -129,6 +129,8 @@ docker/requirements-local.txt
 cache/
 docker/*local*
 docker/superset-websocket/config.json
+# Track the base docker env file (dev defaults only, no real secrets)
+!docker/.env
 docker-compose.override.yml
 docker-compose.yml.before-shared-proxy*
 
