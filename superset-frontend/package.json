@@ -144,7 +144,7 @@
     "emotion-rgba": "0.0.12",
     "eslint-plugin-i18n-strings": "file:eslint-rules/eslint-plugin-i18n-strings",
     "fast-glob": "^3.3.2",
-    "fs-extra": "^11.2.0",
+    "fs-extra": "^11.4.0",
     "fuse.js": "^7.0.0",
     "geolib": "^2.0.24",
     "geostyler": "^12.0.2",
