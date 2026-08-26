@@ -129,7 +129,7 @@
     "ag-grid-react": "33.1.1",
     "antd": "4.10.3",
     "antd-v5": "npm:antd@^5.18.0",
-    "bootstrap": "^3.4.1",
+    "bootstrap": "^5.3.8",
     "brace": "^0.11.1",
     "chart.js": "^4.5.1",
     "chrono-node": "^2.7.8",
