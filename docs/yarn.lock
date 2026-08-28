@@ -4095,23 +4095,23 @@
   resolved "https://registry.yarnpkg.com/@standard-schema/utils/-/utils-0.3.0.tgz#3d5e608f16c2390c10528e98e59aef6bf73cae7b"
   integrity sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==
 
-"@storybook/addon-docs@^10.5.5":
-  version "10.5.5"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-docs/-/addon-docs-10.5.5.tgz#c679e9e68b19559bc5dee74c5a4670e95677c26f"
-  integrity sha512-0YpKlimS4XE0kQ8Maa5coeefQxdyDrBHg1wOP3WTPuBe4FolFSCDveR0ge2+vuUBk+fZfn2+l+3Q2jmAWaRGDg==
+"@storybook/addon-docs@^10.5.10":
+  version "10.5.10"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-docs/-/addon-docs-10.5.10.tgz#c65d1d4a6d1e2de50f0decaf82ea57583f220b30"
+  integrity sha512-06JoK3/a7FWI/6GzuidJP9iHp1/Vejboe6lzS1jW+d8ItpecriBt+oXh1VNmUM7i7PjI6pZnet+j51QnLyeOoQ==
   dependencies:
     "@mdx-js/react" "^3.0.0"
-    "@storybook/csf-plugin" "10.5.5"
+    "@storybook/csf-plugin" "10.5.10"
     "@storybook/icons" "^2.0.2"
-    "@storybook/react-dom-shim" "10.5.5"
+    "@storybook/react-dom-shim" "10.5.10"
     react "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
     react-dom "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/csf-plugin@10.5.5":
-  version "10.5.5"
-  resolved "https://registry.yarnpkg.com/@storybook/csf-plugin/-/csf-plugin-10.5.5.tgz#bae774f81987a0114f525d7e90a2b1e6ddf535ba"
-  integrity sha512-/euibhRFqklYCZqUseokojmfYcQpXshVY2QmA1qCuxMz9SzVFD3iSTw+aFLTxpsJGGdcZJk8fnm/rEthLzZ9jA==
+"@storybook/csf-plugin@10.5.10":
+  version "10.5.10"
+  resolved "https://registry.yarnpkg.com/@storybook/csf-plugin/-/csf-plugin-10.5.10.tgz#c65da1cdfe0a11795a14c518e9f8f828b8d54b3b"
+  integrity sha512-TaCLBrqVEr767+w58QDotDUiCTuE5cyRJuRcDlsKQyUIyGBv+lYD3lu8wBiVCYxgIjB/gu9HmqiC+0yx1rHzaw==
   dependencies:
     unplugin "^2.3.5"
 
@@ -4125,10 +4125,10 @@
   resolved "https://registry.yarnpkg.com/@storybook/icons/-/icons-2.1.0.tgz#edfc2450a39c5e780f28c6cbc49acd7bff59b41a"
   integrity sha512-Fxh9vYpX9bQqFeHRiY8h2ApeRGDzRSMLwJwNZ/AIRqnyOKHxRKL+yFe+ctEkVJmuptRE9u1Hrn8ZZNHyfDKKNg==
 
-"@storybook/react-dom-shim@10.5.5":
-  version "10.5.5"
-  resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-10.5.5.tgz#d60aa45a1174b2b404305c0d932cb43854afadf7"
-  integrity sha512-PIk7N3LLrZIxfNxmkvmQN1d5UQ70XEedT8n0GhBiXnM6XL09xPGB8n8TZXeJBRYluKhDQcAyQeT0/OZmcDVQJg==
+"@storybook/react-dom-shim@10.5.10":
+  version "10.5.10"
+  resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-10.5.10.tgz#8ddcad879d8804a9bbc09a5d0ea10f8356f01ed6"
+  integrity sha512-rbu62ILo/VE3iXKmu+kWXFpD1H1Lwi0f19q/x7JnDsD2dxKS9w5znLEqPIq2qxpzi/wjjIb2iUP1cRG1d/9W5A==
 
 "@superset-ui/core@^0.20.4":
   version "0.20.4"
